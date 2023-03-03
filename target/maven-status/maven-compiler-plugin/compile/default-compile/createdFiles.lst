@@ -1,3 +1,7 @@
+mikamarisol/acnh/hybrid/repository/RoseRepository.class
+mikamarisol/acnh/hybrid/entity/Rose.class
 mikamarisol/acnh/hybrid/enumeration/Breed.class
+mikamarisol/acnh/hybrid/impl/RoseServiceImpl.class
 mikamarisol/acnh/hybrid/controller/Controller.class
+mikamarisol/acnh/hybrid/service/RoseService.class
 mikamarisol/acnh/hybrid/AnimalCrossingHybridApplication.class
