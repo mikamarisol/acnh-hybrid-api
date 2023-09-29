@@ -1,30 +1,36 @@
 package mikamarisol.acnh.hybrid.impl;
 
+import mikamarisol.acnh.hybrid.model.Gene;
 import mikamarisol.acnh.hybrid.model.Genotype;
 import mikamarisol.acnh.hybrid.service.HybridService;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
+
 
 @Service
 public class HybridServiceImpl implements HybridService {
-    public List<Genotype> getHybrids(Genotype genotypeOne, Genotype genotypeTwo) {
 
+    @Override
+    public List<Genotype> getHybrids(Genotype mother, Genotype father) {
 
+        List<Genotype> hybrids = new ArrayList<>();
 
-        List<String> children = new ArrayList<>();
-        for (int i = 0; i < genotypeOne.length(); i++) {
-            for (int j = 0; j < genotypeTwo.length(); j++) {
-                List<String> child = Arrays.asList(String.valueOf(genotypeOne.charAt(i)),
-                        String.valueOf(genotypeTwo.charAt(j)));
-                Collections.sort(child);
-                children.add(child.stream().map(Object::toString).collect(Collectors.joining()));
+        for (Gene maternalGene: mother.genes()) {
+            for (Gene paternalGene: father.genes()) {
+                hybrids = monohybridCross(maternalGene, paternalGene);
             }
         }
-        return children;
+        return hybrids;
+    }
+
+    private List<Genotype> monohybridCross(Gene m, Gene f) {
+        Genotype first = new Genotype((List.of(new Gene(m.alleleOne(), f.alleleOne()))));
+        Genotype second = new Genotype((List.of(new Gene(m.alleleOne(), f.alleleTwo()))));
+        Genotype third = new Genotype((List.of(new Gene(m.alleleTwo(), f.alleleOne()))));
+        Genotype fourth = new Genotype((List.of(new Gene(m.alleleTwo(), f.alleleTwo()))));
+
+        return List.of(first, second, third, fourth);
     }
 }
