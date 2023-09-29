@@ -5,7 +5,8 @@ import javax.persistence.Id;
 
 // entity -> single persistent instance of a domain object
 // model -> domain object representing real world object
-@Entity(name = "tulips")
+@Entity
+//@Table(name = "tulips")
 public class Tulip {
 
     @Id
@@ -14,6 +15,10 @@ public class Tulip {
 
     // JPA required no-arg constructor
     public Tulip() {
+    }
 
+    public Tulip(String genotype, String colour) {
+        this.genotype = genotype;
+        this.colour = colour;
     }
 }

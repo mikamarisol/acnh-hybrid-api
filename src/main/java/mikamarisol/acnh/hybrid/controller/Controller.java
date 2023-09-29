@@ -1,26 +1,27 @@
 package mikamarisol.acnh.hybrid.controller;
-import mikamarisol.acnh.hybrid.model.Gene;
+import mikamarisol.acnh.hybrid.entity.Tulip;
+import mikamarisol.acnh.hybrid.repository.TulipRepository;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
 public class Controller {
-    private List<Gene> genes = new ArrayList<>();
 
-    public Controller() {
-        genes.addAll(List.of(
-                new Gene("R", "r"),
-                new Gene("Y", "y")
+    private final TulipRepository tulipRepository;
+
+    public Controller(TulipRepository tulipRepository) {
+        this.tulipRepository = tulipRepository;
+
+        this.tulipRepository.saveAll(List.of(
+                new Tulip("rryyss", "White"),
+                new Tulip("rryySs", "White"),
+                new Tulip("rryySS", "White")
         ));
     }
 
-    @GetMapping("/genes")
-    Iterable<Gene> getGenes() {
-        return genes;
+    @GetMapping("/tulips")
+    Iterable<Tulip> getTulips() {
+        return tulipRepository.findAll();
     }
-
-
 }
