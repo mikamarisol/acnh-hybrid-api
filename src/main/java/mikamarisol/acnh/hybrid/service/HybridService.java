@@ -9,9 +9,10 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class FlowerBreedingService {
+public class HybridService {
 
     public List<String> getChildren(String genotypeOne, String genotpyeTwo) {
+
         List<String> children = new ArrayList<>();
         for (int i = 0; i < genotypeOne.length(); i++) {
             for (int j = 0; j < genotpyeTwo.length(); j++) {

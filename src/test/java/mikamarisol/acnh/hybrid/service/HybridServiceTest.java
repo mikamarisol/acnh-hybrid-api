@@ -12,13 +12,13 @@ import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class FlowerBreedingServiceTest {
+public class HybridServiceTest {
 
-    private FlowerBreedingService flowerBreedingService = new FlowerBreedingService();
+    private HybridService hybridService = new HybridService();
     @ParameterizedTest
     @ArgumentsSource(FlowerBreedingArgumentsProvider.class)
     void breedSingleTrait(String parentOne, String parentTwo, List<String> expectedChildren) {
-        List<String> actualChildren = flowerBreedingService.getChildren(parentOne, parentTwo);
+        List<String> actualChildren = hybridService.getChildren(parentOne, parentTwo);
         assertThat(actualChildren).containsExactlyInAnyOrderElementsOf(expectedChildren);
     }
 
