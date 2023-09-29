@@ -41,7 +41,7 @@ public class HybridServiceTest {
             Genotype rr = new Genotype(List.of(rrGene));
 
             return Stream.of(
-                    Arguments.of(RR, RR, Arrays.asList(RR, RR)),
+                    Arguments.of(RR, RR, Arrays.asList(RR, RR, RR, RR)),
                     Arguments.of(Rr, RR, Arrays.asList(RR, RR, Rr, Rr)),
                     Arguments.of(rr, RR, Arrays.asList(Rr, Rr, Rr, Rr)),
                     Arguments.of(rr, Rr, Arrays.asList(Rr, Rr ,rr, rr)),
