@@ -7,6 +7,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 
 @Service
@@ -15,14 +17,21 @@ public class HybridServiceImpl implements HybridService {
     @Override
     public List<Genotype> getHybrids(Genotype mother, Genotype father) {
 
-        List<Genotype> hybrids = new ArrayList<>();
+        List<List<Genotype>> monohybridCrosses = new ArrayList<>();
 
-        for (Gene maternalGene: mother.genes()) {
-            for (Gene paternalGene: father.genes()) {
-                hybrids = monohybridCross(maternalGene, paternalGene);
-            }
+        for (int i  = 0; i < mother.genes().size(); i++) {
+            monohybridCrosses.add(monohybridCross(mother.genes().get(i), father.genes().get(i)));
         }
-        return hybrids;
+
+        return monohybridCrosses.get(0).stream()
+                .flatMap(t1 -> monohybridCrosses.get(1).stream().map(t2 -> combineTraits(t1, t2)))
+                .collect(Collectors.toList());
+    }
+
+    private Genotype combineTraits(Genotype traitOne, Genotype traitTwo) {
+        return new Genotype(
+                Stream.concat(traitOne.genes().stream(), traitTwo.genes().stream())
+                        .collect(Collectors.toList()));
     }
 
     private List<Genotype> monohybridCross(Gene m, Gene f) {
