@@ -16,13 +16,13 @@ public class HybridServiceTest {
 
     private HybridService hybridService = new HybridService();
     @ParameterizedTest
-    @ArgumentsSource(FlowerBreedingArgumentsProvider.class)
+    @ArgumentsSource(HybridArgumentsProvider.class)
     void breedSingleTrait(String parentOne, String parentTwo, List<String> expectedChildren) {
         List<String> actualChildren = hybridService.getChildren(parentOne, parentTwo);
         assertThat(actualChildren).containsExactlyInAnyOrderElementsOf(expectedChildren);
     }
 
-    static class FlowerBreedingArgumentsProvider implements ArgumentsProvider {
+    static class HybridArgumentsProvider implements ArgumentsProvider {
         @Override
         public Stream<? extends Arguments> provideArguments(ExtensionContext context) {
             return Stream.of(

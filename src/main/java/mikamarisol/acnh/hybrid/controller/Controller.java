@@ -33,7 +33,7 @@ public class Controller {
 
     @GetMapping("/breed-tulips/{genotypeOne}&{genotypeTwo}")
     Iterable<Tulip> breedTulips(@PathVariable String genotypeOne, @PathVariable String genotypeTwo) {
-        List<String> children = hybridService.getChildren(genotypeOne, genotypeTwo);
+        List<String> children = hybridService.getHybrids(genotypeOne, genotypeTwo);
         return tulipRepository.findAllById(children);
     }
 
