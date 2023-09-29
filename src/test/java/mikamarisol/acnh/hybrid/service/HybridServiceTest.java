@@ -18,24 +18,34 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
 public class HybridServiceTest {
+    static Gene RRGene = new Gene("R", "R");
+    static Gene RrGene = new Gene("R", "r");
+    static Gene rrGene = new Gene("r", "r");
+    static Gene YYGene = new Gene("Y", "Y");
+
+    static Gene YyGene = new Gene("Y", "y");
+    static Gene yyGene = new Gene("y", "y");
 
     @Autowired
     private HybridService hybridService;
 
     @ParameterizedTest
-    @ArgumentsSource(HybridArgumentsProvider.class)
+    @ArgumentsSource(MonohybridArgumentsProvider.class)
     void monohybridCross(Genotype mother, Genotype father, List<Genotype> expectedHybrids) {
         List<Genotype> actualHybrids = hybridService.getHybrids(mother, father);
         assertThat(actualHybrids).containsExactlyInAnyOrderElementsOf(expectedHybrids);
     }
 
-    static class HybridArgumentsProvider implements ArgumentsProvider {
+    @ParameterizedTest
+    @ArgumentsSource(DihybridArgumentsProvider.class)
+    void dihybridCross(Genotype mother, Genotype father, List<Genotype> expectedHybrids) {
+        List<Genotype> actualHybrids = hybridService.getHybrids(mother, father);
+        assertThat(actualHybrids).containsExactlyInAnyOrderElementsOf(expectedHybrids);
+    }
+
+    static class MonohybridArgumentsProvider implements ArgumentsProvider {
         @Override
         public Stream<? extends Arguments> provideArguments(ExtensionContext context) {
-            Gene RRGene = new Gene("R", "R");
-            Gene RrGene = new Gene("R", "r");
-            Gene rrGene = new Gene("r", "r");
-
             Genotype RR = new Genotype(List.of(RRGene));
             Genotype Rr = new Genotype(List.of(RrGene));
             Genotype rr = new Genotype(List.of(rrGene));
@@ -46,6 +56,37 @@ public class HybridServiceTest {
                     Arguments.of(rr, RR, Arrays.asList(Rr, Rr, Rr, Rr)),
                     Arguments.of(rr, Rr, Arrays.asList(Rr, Rr ,rr, rr)),
                     Arguments.of(rr, rr, Arrays.asList(rr, rr, rr, rr))
+            );
+        }
+    }
+
+    static class DihybridArgumentsProvider implements ArgumentsProvider {
+        @Override
+        public Stream<? extends Arguments> provideArguments(ExtensionContext context) {
+            Genotype RRYY = new Genotype(List.of(RRGene, YYGene));
+            Genotype RRYy = new Genotype(List.of(RRGene, YyGene));
+            Genotype RRyy = new Genotype(List.of(RRGene, yyGene));
+
+            Genotype RrYY = new Genotype(List.of(RrGene, YYGene));
+            Genotype RrYy = new Genotype(List.of(RrGene, YyGene));
+            Genotype Rryy = new Genotype(List.of(RrGene, yyGene));
+
+
+            Genotype rrYY = new Genotype(List.of(rrGene, YYGene));
+            Genotype rrYy = new Genotype(List.of(rrGene, YyGene));
+            Genotype rryy = new Genotype(List.of(rrGene, yyGene));
+
+            return Stream.of(
+                    Arguments.of(RrYy, RrYy, Arrays.asList(
+                            RRYY,
+                            RRYy, RRYy,
+                            RRyy,
+                            RrYY, RrYY,
+                            RrYy, RrYy, RrYy, RrYy,
+                            Rryy, Rryy,
+                            rrYY,
+                            rrYy, rrYy,
+                            rryy))
             );
         }
     }

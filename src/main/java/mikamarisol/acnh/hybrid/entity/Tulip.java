@@ -5,7 +5,7 @@ import jakarta.persistence.Id;
 import lombok.Getter;
 import lombok.Setter;
 
-// entity -> single persistent instance of a domain object
+// entity -> single persistent instance of a domain object for database
 // model -> domain object representing real world object
 @Entity
 @Getter
