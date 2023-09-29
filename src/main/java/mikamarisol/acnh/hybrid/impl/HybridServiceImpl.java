@@ -14,6 +14,8 @@ import java.util.stream.Collectors;
 public class HybridServiceImpl implements HybridService {
     public List<Genotype> getHybrids(Genotype genotypeOne, Genotype genotypeTwo) {
 
+
+
         List<String> children = new ArrayList<>();
         for (int i = 0; i < genotypeOne.length(); i++) {
             for (int j = 0; j < genotypeTwo.length(); j++) {
