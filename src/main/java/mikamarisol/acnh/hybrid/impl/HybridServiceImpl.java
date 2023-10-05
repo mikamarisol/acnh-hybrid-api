@@ -35,11 +35,14 @@ public class HybridServiceImpl implements HybridService {
     }
 
     private List<Genotype> monohybridCross(Gene m, Gene f) {
-        Genotype first = new Genotype((List.of(new Gene(m.alleleOne(), f.alleleOne()))));
-        Genotype second = new Genotype((List.of(new Gene(m.alleleOne(), f.alleleTwo()))));
-        Genotype third = new Genotype((List.of(new Gene(m.alleleTwo(), f.alleleOne()))));
-        Genotype fourth = new Genotype((List.of(new Gene(m.alleleTwo(), f.alleleTwo()))));
 
-        return List.of(first, second, third, fourth);
+        List<Genotype> hyrbrids = new ArrayList<>();
+
+        for (String maleAllele : List.of(m.alleleOne(), m.alleleTwo())) {
+            for (String femaleAllele : List.of(f.alleleOne(), f.alleleTwo())) {
+                hyrbrids.add(new Genotype(List.of(new Gene(maleAllele, femaleAllele))));
+            }
+        }
+        return hyrbrids;
     }
 }
