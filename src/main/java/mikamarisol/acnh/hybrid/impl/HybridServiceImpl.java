@@ -56,8 +56,8 @@ public class HybridServiceImpl implements HybridService {
 
         List<Genotype> hybrids = new ArrayList<>();
 
-        for (String motherAllele : List.of(m.alleleOne(), m.alleleTwo())) {
-            for (String fatherAllele : List.of(f.alleleOne(), f.alleleTwo())) {
+        for (Character motherAllele : List.of(m.alleleOne(), m.alleleTwo())) {
+            for (Character fatherAllele : List.of(f.alleleOne(), f.alleleTwo())) {
                 hybrids.add(new Genotype(List.of(new Gene(motherAllele, fatherAllele))));
             }
         }
@@ -67,8 +67,8 @@ public class HybridServiceImpl implements HybridService {
 //    private boolean canBreed(Genotype mother, Genotype father) {
 //
 //        if (mother.genes().size() == father.genes().size()) {
-//            for (int g = 0; g < mother.genes().size(); g++) {
-//
+//            for (int i = 0; i < mother.genes().size()) {
+//                if
 //            }
 //        }
 //

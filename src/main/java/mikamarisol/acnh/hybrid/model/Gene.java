@@ -1,10 +1,11 @@
 package mikamarisol.acnh.hybrid.model;
 
 import java.util.Arrays;
-import java.util.Comparator;
+import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
-public record Gene(String alleleOne, String alleleTwo) {
+public record Gene(Character alleleOne, Character alleleTwo) {
 
     @Override
     public boolean equals(Object o) {
@@ -15,8 +16,10 @@ public record Gene(String alleleOne, String alleleTwo) {
 
     @Override
     public String toString() {
-        List<String> alleles = Arrays.asList(alleleOne, alleleTwo);
-        alleles.sort(Comparator.naturalOrder());
-        return String.join("", alleles);
+        List<Character> alleles = Arrays.asList(alleleOne, alleleTwo);
+        Collections.sort(alleles);
+        return alleles.stream()
+                .map(String::valueOf)
+                .collect(Collectors.joining());
     }
 }

@@ -18,13 +18,13 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
 public class HybridServiceTest {
-    static Gene RRGene = new Gene("R", "R");
-    static Gene RrGene = new Gene("R", "r");
-    static Gene rrGene = new Gene("r", "r");
-    static Gene YYGene = new Gene("Y", "Y");
+    static Gene RRGene = new Gene('R', 'R');
+    static Gene RrGene = new Gene('R', 'r');
+    static Gene rrGene = new Gene('r', 'r');
+    static Gene YYGene = new Gene('Y', 'Y');
 
-    static Gene YyGene = new Gene("Y", "y");
-    static Gene yyGene = new Gene("y", "y");
+    static Gene YyGene = new Gene('Y', 'y');
+    static Gene yyGene = new Gene('y', 'y');
 
     @Autowired
     private HybridService hybridService;

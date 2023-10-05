@@ -40,14 +40,10 @@ public class Controller {
     Iterable<Tulip> breedTulips(@PathVariable String genotypeOne, @PathVariable String genotypeTwo) {
 
         Genotype mother = new Genotype(
-                Collections.singletonList(new Gene(
-                        String.valueOf(genotypeOne.charAt(0)),
-                        String.valueOf(genotypeOne.charAt(1)))));
+                Collections.singletonList(new Gene(genotypeOne.charAt(0), genotypeOne.charAt(1))));
 
         Genotype father = new Genotype(
-                Collections.singletonList(new Gene(
-                        String.valueOf(genotypeTwo.charAt(0)),
-                        String.valueOf(genotypeTwo.charAt(1)))));
+                Collections.singletonList(new Gene(genotypeTwo.charAt(0), genotypeTwo.charAt(1))));
 
         List<Genotype> hybrids = hybridService.getHybrids(mother, father);
         return tulipRepository.findAllById(hybrids
