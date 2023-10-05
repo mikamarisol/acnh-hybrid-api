@@ -7,8 +7,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 
 @Service
@@ -17,21 +15,40 @@ public class HybridServiceImpl implements HybridService {
     @Override
     public List<Genotype> getHybrids(Genotype mother, Genotype father) {
 
+        // check that mother and father can breed
+
+        // for each gene, find monohybrid cross
+
+        // forked line method to combine traits
+
+
         List<List<Genotype>> monohybridCrosses = new ArrayList<>();
 
         for (int i  = 0; i < mother.genes().size(); i++) {
             monohybridCrosses.add(monohybridCross(mother.genes().get(i), father.genes().get(i)));
         }
 
-        return monohybridCrosses.get(0).stream()
-                .flatMap(t1 -> monohybridCrosses.get(1).stream().map(t2 -> combineTraits(t1, t2)))
-                .collect(Collectors.toList());
+        while (monohybridCrosses.size() > 1) {
+            List<Genotype> crossOne = monohybridCrosses.get(0);
+            List<Genotype> crossTwo = monohybridCrosses.get(1);
+            monohybridCrosses.remove(0);
+            monohybridCrosses.set(0, applyForkedLine(crossOne, crossTwo));
+        }
+
+        return monohybridCrosses.get(0);
+
     }
 
-    private Genotype combineTraits(Genotype traitOne, Genotype traitTwo) {
-        return new Genotype(
-                Stream.concat(traitOne.genes().stream(), traitTwo.genes().stream())
-                        .collect(Collectors.toList()));
+    private List<Genotype> applyForkedLine(List<Genotype> crossOne, List<Genotype> crossTwo) {
+
+        List<Genotype> combinedGenotypes = new ArrayList<>();
+
+        for (Genotype hybridTraitOne: crossOne) {
+            for (Genotype hybridTraitTwo: crossTwo) {
+                combinedGenotypes.add(hybridTraitOne.add(hybridTraitTwo));
+            }
+        }
+        return combinedGenotypes;
     }
 
     private List<Genotype> monohybridCross(Gene m, Gene f) {
@@ -45,4 +62,14 @@ public class HybridServiceImpl implements HybridService {
         }
         return hybrids;
     }
+
+//    private boolean canBreed(Genotype mother, Genotype father) {
+//
+//        if (mother.genes().size() == father.genes().size()) {
+//            for (int g = 0; g < mother.genes().size(); g++) {
+//
+//            }
+//        }
+//
+//    }
 }
