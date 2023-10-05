@@ -23,20 +23,21 @@ public class HybridServiceImpl implements HybridService {
 
 
         List<List<Genotype>> monohybridCrosses = new ArrayList<>();
-
         for (int i  = 0; i < mother.genes().size(); i++) {
             monohybridCrosses.add(monohybridCross(mother.genes().get(i), father.genes().get(i)));
         }
 
+        return combineTraits(monohybridCrosses);
+
+    }
+
+    private List<Genotype> combineTraits(List<List<Genotype>> monohybridCrosses) {
         while (monohybridCrosses.size() > 1) {
-            List<Genotype> crossOne = monohybridCrosses.get(0);
-            List<Genotype> crossTwo = monohybridCrosses.get(1);
-            monohybridCrosses.remove(0);
-            monohybridCrosses.set(0, applyForkedLine(crossOne, crossTwo));
+            List<Genotype> crossOne = monohybridCrosses.remove(0);
+            List<Genotype> crossTwo = monohybridCrosses.remove(0);
+            monohybridCrosses.add(applyForkedLine(crossOne, crossTwo));
         }
-
         return monohybridCrosses.get(0);
-
     }
 
     private List<Genotype> applyForkedLine(List<Genotype> crossOne, List<Genotype> crossTwo) {
